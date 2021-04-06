@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components/macro'
 
 import UserStats from './components/UserStats'
 import Banner from './components/Banner'
-import Products from './components/Products';
+import ProductsWrapper from './components/ProductsWrapper';
 
 
 const theme = {
@@ -33,10 +33,6 @@ const TopBar = styled.div`
   background-color: white;
 `
 
-const ProductsWrapper = styled.div`
-  padding-top: 2em;
-`
-
 
 function App() {
   return (
@@ -48,7 +44,6 @@ function App() {
         </TopBar>
         <Banner />
         <ProductsWrapper>
-          <Products />
           {/* <ProductOptions>
           <ProductQty>{xx} of {xx} products</ProductQty> |
           Sort by:

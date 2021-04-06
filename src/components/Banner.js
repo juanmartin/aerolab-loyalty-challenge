@@ -8,10 +8,16 @@ const Box = styled.div`
 `
 const Background = styled.div`
   width: 100%;
-  background-image: url(${img});
-  background-size: contain;
   height: 412px;
-
+  background-image: url(${img});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #15DBFF;
+  background-position-x: right;
+  @media (min-width: 1253px){
+    background-size: contain;
+    background-position: right;
+  }
 `
 const Title = styled.h1`
   font-family: ${props => props.theme.font};
