@@ -9,25 +9,32 @@ import Products from './components/Products';
 
 const theme = {
   font: 'Source Sans Pro',
-  primary: '#0ad4fa'
+  primary: '#0ad4fa',
+  primaryTransparent: 'rgba(10, 212, 250, 0.8)',
+  gray: '#616161',
+  lightGray: '#a3a3a3',
+  backgroundGray: '#f9f9f9'
 }
 
+
 const Box = styled.div`
-  /* padding: 30px; */
+  background-color: ${props => props.theme.backgroundGray};
+  min-height: 100vh;
 `
 
 const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   height: 50px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 30px;
-  margin-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: white;
 `
 
 const ProductsWrapper = styled.div`
-  margin: 3%;
+  padding-top: 2em;
 `
 
 

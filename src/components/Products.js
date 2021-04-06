@@ -4,6 +4,12 @@ import styled from 'styled-components/macro'
 import { Container, Row, Col } from 'react-awesome-styled-grid'
 
 
+const StatusContainer = styled.div`
+  text-align: center;
+  max-width: 70%;
+  margin: 0 auto;
+`
+
 export default function Products() {
   const [products, setProducts] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
@@ -36,27 +42,27 @@ export default function Products() {
 
   if (error) {
     return (
-      <div>Error al buscar productos: {error.message}</div>
+      <StatusContainer>Error al buscar productos: {error.message}</StatusContainer>
     )
   } else if (!isLoaded) {
     return (
-      <div>Cargando...</div>
+      <StatusContainer>Cargando...</StatusContainer>
     )
   } else {
     return (
-      <>
+      <div >
         <Container>
           <Row>
             {products.map((product) => {
               return (
-                <Col xs={4} md={2} >
+                <Col xs={4} md={4} lg={3}>
                   <Producto name={product.name} cost={product.cost} category={product.category} img={product.img} />
                 </Col>
               )
             })}
           </Row>
         </Container>
-      </>
+      </div>
     )
   }
 }

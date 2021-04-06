@@ -7,7 +7,7 @@ const Box = styled.div`
 
 const StatsBox = styled(Box)`
   background-color: #ededed;
-  border-radius: 100px;
+  border-radius: 99999px;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -17,7 +17,7 @@ const StatsBox = styled(Box)`
 const Text = styled.p`
   font-family: ${(props) => props.theme.font};
   font-size: 20px;
-  color: #616161;
+  color: ${(props) => props.theme.gray};
   letter-spacing: -0.15px;
   margin: 0;
   align-self: center;
