@@ -68,6 +68,7 @@ const PrevPageBtn = styled(PageBtn)`
 
 export default function Content() {
   const [products, setProducts] = useState([])
+  const [sortedProducts, setSortedProducts] = useState([])
   const [paginatedProducts, setPaginatedProducts] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState(null)
@@ -98,14 +99,32 @@ export default function Content() {
     fetchProds()
   }, [])
 
+  useEffect(() => {
+    setSortedProducts(products)
+  }, [products])
 
   useEffect(() => {
     const indexLast = currentPage * pageLimit
     const indexFirst = indexLast - pageLimit
-    const productosPaginados = products.slice(indexFirst, indexLast)
+    const productosPaginados = sortedProducts.slice(indexFirst, indexLast)
     console.log('productosPaginados', productosPaginados)
     setPaginatedProducts(productosPaginados)
-  }, [products, currentPage])
+  }, [sortedProducts, currentPage])
+
+
+  const sortMostRecent = () => {
+    setSortedProducts(products)
+  }
+  const sortPrice = (order) => {
+    // order true for lowest price, else highest
+    const sortedProds = [...products]
+    if (order) {
+      sortedProds.sort((a, b) => (a.cost > b.cost) ? 1 : -1)
+    } else {
+      sortedProds.sort((a, b) => (a.cost <= b.cost) ? 1 : -1)
+    }
+    setSortedProducts(sortedProds)
+  }
 
   const nextPage = () => {
     setCurrentPage(currentPage + 1)
@@ -113,9 +132,8 @@ export default function Content() {
   const prevPage = () => {
     setCurrentPage(currentPage - 1)
   }
-
   const PageButton = () => {
-    if(products.length <= (currentPage * pageLimit)){
+    if (products.length <= (currentPage * pageLimit)) {
       return (
         <PrevPageBtn onClick={prevPage} />
       )
@@ -142,9 +160,9 @@ export default function Content() {
           <SortWrapper>
             {/* <ProductQty>{xx} of {xx} products</ProductQty> */}
             Sort by:
-            <SortButton>Most Recent</SortButton>
-            <SortButton>Lowest Price</SortButton>
-            <SortButton>Highest Price</SortButton>
+            <SortButton onClick={sortMostRecent}>Most Recent</SortButton>
+            <SortButton onClick={() => sortPrice(true)}>Lowest Price</SortButton>
+            <SortButton onClick={() => sortPrice(false)}>Highest Price</SortButton>
           </SortWrapper>
           <PageButton />
         </PaginationSortingBox>
