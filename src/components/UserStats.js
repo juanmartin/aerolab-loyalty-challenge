@@ -22,15 +22,15 @@ const Text = styled.p`
   margin: 0;
   align-self: center;
   line-height: 48px;
-  /* text-align: left; */
 `
 
-export default function UserStats() {
+export default function UserStats(props) {
+  const {name, points} = props
   return (
     <Box style={{ gap: "20px" }}>
-      <Text>John Kite</Text>
+      <Text>{name}</Text>
       <StatsBox>
-        <Text>6000</Text>
+        <Text>{points}</Text>
         <img src={coin} alt="Monedas"  />
       </StatsBox>
     </Box>

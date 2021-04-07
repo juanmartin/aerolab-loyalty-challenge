@@ -57,6 +57,9 @@ const Button = styled.button`
   padding-right: 70px;
   color: ${(props) => props.theme.gray};
   font-size: 1em;
+  &:focus {
+    outline: none;
+  }
 `
 const Cost = styled.div`
   display: flex;

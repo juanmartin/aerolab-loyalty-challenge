@@ -34,6 +34,9 @@ const SortButton = styled.button`
   padding: 10px 20px;
   font-size: 24px;
   color: ${(props) => props.theme.lightGray};
+  &:focus {
+    outline: none;
+  }
   &:hover {
     background-color: ${props => props.theme.primaryTransparent};
   }
@@ -48,6 +51,9 @@ const PageBtn = styled.button`
   border: none;
   border-radius: 99999px;
   background-size: cover;
+  &:focus {
+    outline: none;
+  }
   &:hover {
     filter: brightness(0.9);
   }

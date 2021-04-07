@@ -5,6 +5,7 @@ import styled, { ThemeProvider } from 'styled-components/macro'
 import UserStats from './components/UserStats'
 import Banner from './components/Banner'
 import Content from './components/Content';
+import { useEffect, useState } from 'react';
 
 
 const theme = {
@@ -36,12 +37,42 @@ const TopBar = styled.div`
 
 
 function App() {
+  const [user, setUser] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() =>{
+    const fetchUser = () => {
+      fetch("https://coding-challenge-api.aerolab.co/user/me", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUwZTI1YjdlNzE4NzAwMjBlMzhmOGYiLCJpYXQiOjE2MTU5MTM1NjN9.YmFJ5ctjHwsXStGyY-b5vMg5ZPv_xlrq4qbWRbkMMEA'
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+          console.log('RESPUESTA', json)
+          setUser(json)
+          setIsLoaded(true)
+        })
+        .catch((err) => {
+          console.log('ERROR GET API 2', err)
+          setIsLoaded(true)
+          setError(err)
+        })
+    }
+    fetchUser()
+    console.log('USER:', user)
+  },[])
   return (
     <ThemeProvider theme={theme}>
       <Box>
         <TopBar>
           <img src={logo} alt="logo" style={{ width: 40 }} />
-          <UserStats />
+          {user && <UserStats name={user.name} points={user.points} />}
+          {error && <p>{error.message}</p>}
         </TopBar>
         <Banner />
         <Content />
