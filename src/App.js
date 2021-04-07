@@ -6,6 +6,7 @@ import UserStats from './components/UserStats'
 import Banner from './components/Banner'
 import Content from './components/Content';
 import { useEffect, useState } from 'react';
+import UserContext from './Context/UserContext'
 
 
 const theme = {
@@ -41,7 +42,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState(null)
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchUser = () => {
       fetch("https://coding-challenge-api.aerolab.co/user/me", {
         method: 'GET',
@@ -53,7 +54,6 @@ function App() {
       })
         .then(res => res.json())
         .then(json => {
-          console.log('RESPUESTA', json)
           setUser(json)
           setIsLoaded(true)
         })
@@ -65,17 +65,25 @@ function App() {
     }
     fetchUser()
     console.log('USER:', user)
-  },[])
+  }, [])
+
+  useEffect(() => {
+    console.log('user:', user)
+  }, [user])
+
   return (
     <ThemeProvider theme={theme}>
       <Box>
-        <TopBar>
-          <img src={logo} alt="logo" style={{ width: 40 }} />
-          {user && <UserStats name={user.name} points={user.points} />}
-          {error && <p>{error.message}</p>}
-        </TopBar>
-        <Banner />
-        <Content />
+        <UserContext.Provider value={{ user, setUser }}>
+          <TopBar>
+            <img src={logo} alt="logo" style={{ width: 40 }} />
+            {!isLoaded && <p>Loading User Stats...</p>}
+            {user && <UserStats name={user.name} points={user.points} />}
+            {error && <p>{error.message}</p>}
+          </TopBar>
+          <Banner />
+          <Content />
+        </UserContext.Provider>
       </Box>
     </ThemeProvider>
   )

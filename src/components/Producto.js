@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from "styled-components/macro"
+
 import coin from "../assets/icons/coin.svg"
 import buyBlue from "../assets/icons/buy-blue.svg"
 import buyWhite from "../assets/icons/buy-white.svg"
 
+import UserContext from "../Context/UserContext"
 
 const Box = styled.div`
   height: 276px;
@@ -82,7 +84,33 @@ const NameText = styled.p`
 
 
 export default function Producto(props) {
-  const { name, cost, img, category } = props
+  const { _id, name, cost, img, category } = props
+  const { user, setUser } = useContext(UserContext)
+
+  const redeem = (id, cost) => {
+    console.log('redeem', id)
+    fetch("https://coding-challenge-api.aerolab.co/redeem", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUwZTI1YjdlNzE4NzAwMjBlMzhmOGYiLCJpYXQiOjE2MTU5MTM1NjN9.YmFJ5ctjHwsXStGyY-b5vMg5ZPv_xlrq4qbWRbkMMEA'
+      },
+      body: JSON.stringify({ productId: id })
+    })
+      .then(res => res.json())
+      .then(json => {
+        if(json.error){
+          console.log('error redeeming', json.error)
+        } else {
+          console.log('Redeemed:', json)
+          setUser({ ...user, points: user.points - cost })
+        }
+      })
+      .catch((err) => {
+        console.log('ERROR REDEEM', err)
+      })
+  }
 
   return (
     <Box>
@@ -97,7 +125,7 @@ export default function Producto(props) {
           <h1 style={{ color: 'white', fontWeight: 'normal' }}>{cost}</h1>
           <img src={coin} alt="Monedas" />
         </Cost>
-        <Button>Redeem now</Button>
+        <Button onClick={() => redeem(_id, cost)}>Redeem now</Button>
       </Overlay>
     </Box>
   )

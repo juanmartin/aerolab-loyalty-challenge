@@ -84,7 +84,6 @@ export default function Content() {
       })
         .then(res => res.json())
         .then(json => {
-          console.log('RESPUESTA', json)
           setProducts(json)
           setIsLoaded(true)
         })

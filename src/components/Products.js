@@ -11,7 +11,7 @@ export default function Products(props) {
         products.map((product) => {
           return (
             <Col xs={4} sm={4} md={4} lg={3}>
-              <Producto name={product.name} cost={product.cost} category={product.category} img={product.img} />
+              <Producto _id={product._id} name={product.name} cost={product.cost} category={product.category} img={product.img} />
             </Col>
           )
         })
