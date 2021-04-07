@@ -38,7 +38,7 @@ const Overlay = styled.div`
   }
 `
 const ProdImg = styled.img`
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid ${props => props.theme.borderGray};
 `
 const BuyImg = styled.img`
   width: 42px;

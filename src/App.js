@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components/macro'
 
 import UserStats from './components/UserStats'
 import Banner from './components/Banner'
-import ProductsWrapper from './components/ProductsWrapper';
+import Content from './components/Content';
 
 
 const theme = {
@@ -13,7 +13,8 @@ const theme = {
   primaryTransparent: 'rgba(10, 212, 250, 0.8)',
   gray: '#616161',
   lightGray: '#a3a3a3',
-  backgroundGray: '#f9f9f9'
+  backgroundGray: '#f9f9f9',
+  borderGray: '#d9d9d9'
 }
 
 
@@ -39,25 +40,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <Box>
         <TopBar>
-          <img src={logo} alt="logo" style={{width: 40}}/>
+          <img src={logo} alt="logo" style={{ width: 40 }} />
           <UserStats />
         </TopBar>
         <Banner />
-        <ProductsWrapper>
-          {/* <ProductOptions>
-          <ProductQty>{xx} of {xx} products</ProductQty> |
-          Sort by:
-        <SortButton>Most Recent</SortButton>
-          <SortButton>Lowest Price</SortButton>
-          <SortButton>Highest Price</SortButton>
-          <NextPageBtn />
-        </ProductOptions>
-        <Products />
-        <ProductOptions>
-          <ProductQty>{xx} of {xx} products</ProductQty> |
-          <NextPageBtn />
-        </ProductOptions> */}
-        </ProductsWrapper>
+        <Content />
       </Box>
     </ThemeProvider>
   )
