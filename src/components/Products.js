@@ -6,7 +6,7 @@ import { Row, Col } from 'react-awesome-styled-grid'
 export default function Products(props) {
   const { products } = props
   return (
-    <Row style={{marginTop: 40, marginBottom: 40}}>
+    <Row style={{ marginTop: 40, marginBottom: 40 }}>
       {
         products.map((product) => {
           return (

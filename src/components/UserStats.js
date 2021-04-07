@@ -25,13 +25,13 @@ const Text = styled.p`
 `
 
 export default function UserStats(props) {
-  const {name, points} = props
+  const { name, points } = props
   return (
     <Box style={{ gap: "20px" }}>
       <Text>{name}</Text>
       <StatsBox>
         <Text>{points}</Text>
-        <img src={coin} alt="Monedas"  />
+        <img src={coin} alt="Monedas" />
       </StatsBox>
     </Box>
   )

@@ -100,7 +100,7 @@ export default function Producto(props) {
     })
       .then(res => res.json())
       .then(json => {
-        if(json.error){
+        if (json.error) {
           console.log('error redeeming', json.error)
         } else {
           console.log('Redeemed:', json)
