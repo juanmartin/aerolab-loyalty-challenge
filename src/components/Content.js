@@ -18,31 +18,33 @@ const PaginationSortingBox = styled.div`
   align-items: center;
   border-bottom: 1px solid ${props => props.theme.borderGray};
   padding-bottom: 2em;
+  margin-bottom: 2em;
 `
-const ProductQty = styled.div``
+const ProductQty = styled.div`
+  padding-right: 30px;
+  color: ${props => props.theme.gray};
+  border-right: 1px solid ${props => props.theme.borderGray};
+`
 const SortWrapper = styled.div`
   display: flex;
   gap: 30px;
   align-items: center;
   font-size: 24px;
   color: ${(props) => props.theme.lightGray};
-
 `
 const SortButton = styled.button`
   border: none;
   border-radius: 99999px;
   padding: 10px 20px;
   font-size: 24px;
-  color: ${(props) => props.theme.lightGray};
+  color: ${(props) => props.active ? 'white' : props.theme.gray};
+  background-color: ${(props) => props.active ? props.theme.primary : props.theme.lightestGray};
   &:focus {
     outline: none;
   }
   &:hover {
     background-color: ${props => props.theme.primaryTransparent};
-  }
-  &:active {
     color: white;
-    background-color: ${props => props.theme.primary};
   }
 `
 const PageBtn = styled.button`
@@ -65,15 +67,17 @@ const PrevPageBtn = styled(PageBtn)`
   background-image: url(${backBtn});
 `
 
+const sorting = ['Most Recent', 'Lowest Price', 'Highest Price']
 
 export default function Content() {
   const [products, setProducts] = useState([])
-  const [sortedProducts, setSortedProducts] = useState([])
-  const [paginatedProducts, setPaginatedProducts] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState(null)
+  const [sortedProducts, setSortedProducts] = useState([])
+  const [paginatedProducts, setPaginatedProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [pageLimit] = useState(16)
+  const [activeSorting, setActiveSorting] = useState(sorting[0])
 
   useEffect(() => {
     const fetchProds = () => {
@@ -114,14 +118,17 @@ export default function Content() {
 
   const sortMostRecent = () => {
     setSortedProducts(products)
+    setActiveSorting(sorting[0])
   }
   const sortPrice = (order) => {
     // order true for lowest price, else highest
     const sortedProds = [...products]
     if (order) {
       sortedProds.sort((a, b) => (a.cost > b.cost) ? 1 : -1)
+      setActiveSorting(sorting[1])
     } else {
       sortedProds.sort((a, b) => (a.cost <= b.cost) ? 1 : -1)
+      setActiveSorting(sorting[2])
     }
     setSortedProducts(sortedProds)
   }
@@ -158,17 +165,19 @@ export default function Content() {
       <Container>
         <PaginationSortingBox style={{ paddingTop: '4em' }}>
           <SortWrapper>
-            {/* <ProductQty>{xx} of {xx} products</ProductQty> */}
+            <ProductQty>{pageLimit} of {products.length} products</ProductQty>
             Sort by:
-            <SortButton onClick={sortMostRecent}>Most Recent</SortButton>
-            <SortButton onClick={() => sortPrice(true)}>Lowest Price</SortButton>
-            <SortButton onClick={() => sortPrice(false)}>Highest Price</SortButton>
+            <SortButton active={activeSorting === sorting[0]} onClick={sortMostRecent}>Most Recent</SortButton>
+            <SortButton active={activeSorting === sorting[1]} onClick={() => sortPrice(true)}>Lowest Price</SortButton>
+            <SortButton active={activeSorting === sorting[2]} onClick={() => sortPrice(false)}>Highest Price</SortButton>
           </SortWrapper>
           <PageButton />
         </PaginationSortingBox>
         <Products products={paginatedProducts} />
         <PaginationSortingBox>
-          {/* <ProductQty>{xx} of {xx} products</ProductQty> | */}
+          <SortWrapper>
+            <ProductQty style={{border: 'none'}}>{pageLimit} of {products.length} products</ProductQty>
+          </SortWrapper>
           <PageButton />
         </PaginationSortingBox>
       </Container>
