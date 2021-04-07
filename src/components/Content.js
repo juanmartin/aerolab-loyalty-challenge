@@ -61,7 +61,7 @@ const PageBtn = styled.button`
 const NextPageBtn = styled(PageBtn)`
   background-image: url(${nextBtn});
 `
-const BackPageBtn = styled(PageBtn)`
+const PrevPageBtn = styled(PageBtn)`
   background-image: url(${backBtn});
 `
 
@@ -71,6 +71,8 @@ export default function Content() {
   const [paginatedProducts, setPaginatedProducts] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageLimit] = useState(16)
 
   useEffect(() => {
     const fetchProds = () => {
@@ -96,12 +98,34 @@ export default function Content() {
     fetchProds()
   }, [])
 
+
   useEffect(() => {
-    console.log('prods', products)
-    const productosPaginados = products.slice(0, 16)
+    const indexLast = currentPage * pageLimit
+    const indexFirst = indexLast - pageLimit
+    const productosPaginados = products.slice(indexFirst, indexLast)
     console.log('productosPaginados', productosPaginados)
     setPaginatedProducts(productosPaginados)
-  }, [products])
+  }, [products, currentPage])
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1)
+  }
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1)
+  }
+
+  const PageButton = () => {
+    if(products.length <= (currentPage * pageLimit)){
+      return (
+        <PrevPageBtn onClick={prevPage} />
+      )
+    } else {
+      return (
+        <NextPageBtn onClick={nextPage} />
+      )
+    }
+  }
+
 
   if (error) {
     return (
@@ -122,12 +146,12 @@ export default function Content() {
             <SortButton>Lowest Price</SortButton>
             <SortButton>Highest Price</SortButton>
           </SortWrapper>
-          <NextPageBtn />
+          <PageButton />
         </PaginationSortingBox>
         <Products products={paginatedProducts} />
         <PaginationSortingBox>
           {/* <ProductQty>{xx} of {xx} products</ProductQty> | */}
-          <NextPageBtn />
+          <PageButton />
         </PaginationSortingBox>
       </Container>
     )
