@@ -24,13 +24,11 @@ const theme = {
   error: 'rgba(255, 0, 0, 0.6)'
 }
 
-
 const Box = styled.div`
   background-color: ${props => props.theme.backgroundGray};
   min-height: 100vh;
   padding-bottom: 3em;
 `
-
 const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,6 +38,11 @@ const TopBar = styled.div`
   padding-left: 30px;
   padding-right: 30px;
   background-color: white;
+`
+const Footer = styled.div`
+  padding-top: 2em;
+  text-align: center;
+  color: ${props => props.theme.lightGray} ;
 `
 
 
@@ -86,6 +89,9 @@ function App() {
           <Banner />
           <Content />
         </UserContext.Provider>
+        <Footer>
+          Made with ♥ and <span style={{ fontFamily: 'monospace' }}>{`</>`}</span> by <a href="https://juanm.art/" target="_blank" rel="noreferrer" style={{ color: '#909090'}}>juanm.art/in</a>
+        </Footer>
       </Box>
     </ThemeProvider>
   )
