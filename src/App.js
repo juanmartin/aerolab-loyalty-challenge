@@ -16,10 +16,12 @@ const theme = {
   gray: '#616161',
   grayTransparent: 'rgba(97, 97, 97, 0.8)',
   lightGray: '#a3a3a3',
+  lightGrayTransparent: 'rgba(97, 97, 97, 0.4)',
   lightestGray: '#ededed',
   backgroundGray: '#f9f9f9',
   borderGray: '#d9d9d9',
-  success: 'rgba(0, 250, 60, 0.6)'
+  success: 'rgba(0, 250, 60, 0.6)',
+  error: 'rgba(255, 0, 0, 0.6)'
 }
 
 

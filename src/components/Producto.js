@@ -37,7 +37,7 @@ const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.redeemed ? props.theme.success : props.theme.primaryTransparent};
+  background-color: ${props => props.redeemed ? props.theme.success : (props.canBeRedeemed ? props.theme.primaryTransparent : props.theme.lightGrayTransparent)};
   ${Box}:hover & {
     display: flex;
     flex-direction: column;
@@ -170,7 +170,7 @@ export default function Producto(props) {
       <Separator />
       <CategoryText>{category}</CategoryText>
       <NameText>{name}</NameText>
-      <Overlay redeemed={currentlyRedeemed}>
+      <Overlay redeemed={currentlyRedeemed} canBeRedeemed={currentlyCanBeRedeemed}>
         <BuyIcon color={"white"} />
         <Cost>
           <h1 style={{ color: 'white', fontWeight: 'normal' }}>{cost}</h1>
