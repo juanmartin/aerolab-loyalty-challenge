@@ -33,10 +33,7 @@ const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   height: 50px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 10px 30px;
   background-color: white;
 `
 const Footer = styled.div`
