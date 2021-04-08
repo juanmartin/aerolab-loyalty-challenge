@@ -86,7 +86,7 @@ export default function Content() {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUwZTI1YjdlNzE4NzAwMjBlMzhmOGYiLCJpYXQiOjE2MTU5MTM1NjN9.YmFJ5ctjHwsXStGyY-b5vMg5ZPv_xlrq4qbWRbkMMEA'
+          'Authorization': `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`
         }
       })
         .then(res => res.json())
@@ -95,7 +95,7 @@ export default function Content() {
           setIsLoaded(true)
         })
         .catch((err) => {
-          console.log('ERROR GET API 2', err)
+          console.log('Error fetching products.', err)
           setIsLoaded(true)
           setError(err)
         })
@@ -111,9 +111,8 @@ export default function Content() {
     const indexLast = currentPage * pageLimit
     const indexFirst = indexLast - pageLimit
     const productosPaginados = sortedProducts.slice(indexFirst, indexLast)
-    // console.log('productosPaginados', productosPaginados)
     setPaginatedProducts(productosPaginados)
-  }, [sortedProducts, currentPage])
+  }, [sortedProducts, currentPage, pageLimit])
 
 
   const sortMostRecent = () => {
@@ -176,7 +175,7 @@ export default function Content() {
         <Products products={paginatedProducts} />
         <PaginationSortingBox>
           <SortWrapper>
-            <ProductQty style={{border: 'none'}}>{pageLimit} of {products.length} products</ProductQty>
+            <ProductQty style={{ border: 'none' }}>{pageLimit} of {products.length} products</ProductQty>
           </SortWrapper>
           <PageButton />
         </PaginationSortingBox>

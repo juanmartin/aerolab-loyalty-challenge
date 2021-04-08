@@ -115,7 +115,7 @@ export default function Producto(props) {
     if ((!currentlyRedeemed) && (user?.points < cost)) {
       setCurrentlyCanBeRedeemed(false)
     }
-  }, [user, currentlyRedeemed])
+  }, [user, currentlyRedeemed, cost])
 
   const redeem = (id, cost) => {
     fetch("https://coding-challenge-api.aerolab.co/redeem", {
@@ -123,21 +123,21 @@ export default function Producto(props) {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUwZTI1YjdlNzE4NzAwMjBlMzhmOGYiLCJpYXQiOjE2MTU5MTM1NjN9.YmFJ5ctjHwsXStGyY-b5vMg5ZPv_xlrq4qbWRbkMMEA'
+        'Authorization': `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`
       },
       body: JSON.stringify({ productId: id })
     })
       .then(res => res.json())
       .then(json => {
         if (json.error) {
-          console.log('error redeeming', json.error)
+          console.log('Error redeeming.', json.error)
         } else {
           console.log('Redeemed:', json)
           setUser({ ...user, points: user.points - cost })
         }
       })
       .catch((err) => {
-        console.log('ERROR REDEEM', err)
+        console.log('Redeem Error!', err)
       })
 
     setCurrentlyRedeemed(true)

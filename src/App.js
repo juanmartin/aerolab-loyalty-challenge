@@ -55,7 +55,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDUwZTI1YjdlNzE4NzAwMjBlMzhmOGYiLCJpYXQiOjE2MTU5MTM1NjN9.YmFJ5ctjHwsXStGyY-b5vMg5ZPv_xlrq4qbWRbkMMEA'
+          'Authorization': `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`
         }
       })
         .then(res => res.json())
@@ -64,7 +64,7 @@ function App() {
           setIsLoaded(true)
         })
         .catch((err) => {
-          console.log('ERROR GET API 2', err)
+          console.log('Error fetching user data.', err)
           setIsLoaded(true)
           setError(err)
         })
@@ -72,9 +72,6 @@ function App() {
     fetchUser()
   }, [])
 
-  useEffect(() => {
-    console.log('user:', user)
-  }, [user])
 
   return (
     <ThemeProvider theme={theme}>
