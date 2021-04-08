@@ -111,7 +111,7 @@ export default function Content() {
     const indexLast = currentPage * pageLimit
     const indexFirst = indexLast - pageLimit
     const productosPaginados = sortedProducts.slice(indexFirst, indexLast)
-    console.log('productosPaginados', productosPaginados)
+    // console.log('productosPaginados', productosPaginados)
     setPaginatedProducts(productosPaginados)
   }, [sortedProducts, currentPage])
 

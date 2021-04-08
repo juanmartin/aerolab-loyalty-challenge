@@ -17,7 +17,8 @@ const theme = {
   lightGray: '#a3a3a3',
   lightestGray: '#ededed',
   backgroundGray: '#f9f9f9',
-  borderGray: '#d9d9d9'
+  borderGray: '#d9d9d9',
+  success: 'rgba(0, 250, 60, 0.6)'
 }
 
 
@@ -65,7 +66,6 @@ function App() {
         })
     }
     fetchUser()
-    console.log('USER:', user)
   }, [])
 
   useEffect(() => {

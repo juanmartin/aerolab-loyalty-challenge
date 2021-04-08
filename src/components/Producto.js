@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from "styled-components/macro"
 
 import coin from "../assets/icons/coin.svg"
@@ -22,7 +22,13 @@ const Box = styled.div`
     transform: translate(0, -3px);
   }
   &:active {
-    transform: translate(0, 2px);
+    transform: translate(0);
+    animation: ${props => props.canBeRedeemed ? "none" : "nudge 0.125s normal"};
+  }
+  @keyframes nudge {
+    0% { transform: translate(0) }
+    50% { transform: translateX(5px) }
+    100% { transform: translateX(-5px) }
   }
 `
 const Overlay = styled.div`
@@ -30,12 +36,12 @@ const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  background-color: ${props => props.redeemed ? props.theme.success : props.theme.primaryTransparent};
   ${Box}:hover & {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${props => props.theme.primaryTransparent};
     mix-blend-mode: normal;
   }
 `
@@ -50,14 +56,14 @@ const BuyImg = styled.img`
 `
 const Button = styled.button`
   position: relative;
-  background-color: white;
+  background-color: ${props => props.disabled ? props.theme.lightestGray : 'white'};
   border-radius: 99999px;
   border-style: none;
   margin: 10px;
   padding: 10px;
   padding-left: 70px;
   padding-right: 70px;
-  color: ${(props) => props.theme.gray};
+  color: ${(props) => props.disabled ? props.theme.lightGray : props.theme.gray};
   font-size: 1em;
   &:focus {
     outline: none;
@@ -84,8 +90,12 @@ const NameText = styled.p`
 
 
 export default function Producto(props) {
-  const { _id, name, cost, img, category } = props
+  const { _id, name, cost, img, category, redeemed, canBeRedeemed } = props
   const { user, setUser } = useContext(UserContext)
+  const [currentlyRedeemed, setCurrentlyRedeemed] = useState(redeemed)
+  const [currentlyCanBeRedeemed, setCurrentlyCanBeRedeemed] = useState(canBeRedeemed)
+
+  console.log('currentlyCanBeRedeemed', currentlyCanBeRedeemed, name, cost)
 
   const redeem = (id, cost) => {
     console.log('redeem', id)
@@ -110,22 +120,25 @@ export default function Producto(props) {
       .catch((err) => {
         console.log('ERROR REDEEM', err)
       })
+
+    setCurrentlyRedeemed(true)
+    setCurrentlyCanBeRedeemed(false)
   }
 
   return (
-    <Box>
+    <Box canBeRedeemed={currentlyCanBeRedeemed}>
       <BuyImg src={buyBlue} alt="Redeem" />
       <ProdImg src={img.url} />
       <CategoryText>{category}</CategoryText>
       <NameText>{name}</NameText>
-      <Overlay>
+      <Overlay redeemed={currentlyRedeemed}>
         {/* Hack para que el BuyImg coincida, pues los assets son de diferentes sizes */}
         <BuyImg src={buyWhite} alt="Redeem" style={{ width: 50, right: 4, top: 8 }} />
         <Cost>
           <h1 style={{ color: 'white', fontWeight: 'normal' }}>{cost}</h1>
           <img src={coin} alt="Monedas" />
         </Cost>
-        <Button onClick={() => redeem(_id, cost)}>Redeem now</Button>
+        <Button disabled={currentlyRedeemed} onClick={() => redeem(_id, cost)}>{currentlyRedeemed ? 'Redeemed!' : 'Redeem now'}</Button>
       </Overlay>
     </Box>
   )
