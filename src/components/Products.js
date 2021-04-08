@@ -22,7 +22,7 @@ export default function Products(props) {
   }, [user])
 
   return (
-    <Row style={{ marginBottom: 40 }}>
+    <Row style={{ marginBottom: 40, marginTop: 40 }}>
       {products.map((product) => {
         const redeemed = isRedeemed(product._id)
         const redemeable = canBeRedeemed(product._id, product.cost)

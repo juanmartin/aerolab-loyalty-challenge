@@ -26,6 +26,7 @@ const theme = {
 const Box = styled.div`
   background-color: ${props => props.theme.backgroundGray};
   min-height: 100vh;
+  padding-bottom: 3em;
 `
 
 const TopBar = styled.div`

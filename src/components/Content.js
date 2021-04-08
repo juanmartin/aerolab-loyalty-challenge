@@ -18,7 +18,6 @@ const PaginationSortingBox = styled.div`
   align-items: center;
   border-bottom: 1px solid ${props => props.theme.borderGray};
   padding-bottom: 2em;
-  margin-bottom: 2em;
 `
 const ProductQty = styled.div`
   padding-right: 30px;

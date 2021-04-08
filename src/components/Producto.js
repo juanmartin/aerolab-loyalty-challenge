@@ -14,6 +14,7 @@ const Box = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  padding: 0 15%;
   background-color: white;
   box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.10);
   transition: transform .125s;
@@ -46,7 +47,14 @@ const Overlay = styled.div`
   }
 `
 const ProdImg = styled.img`
-  border-bottom: 1px solid ${props => props.theme.borderGray};
+  height: 182px;
+  object-fit: none;
+`
+const Separator = styled.hr`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid ${props => props.theme.lightestGray};
 `
 const BuyImg = styled.img`
   width: 42px;
@@ -78,13 +86,11 @@ const Cost = styled.div`
 const CategoryText = styled.p`
   color: ${(props) => props.theme.lightGray};
   align-self: flex-start;
-  margin-left: 2.5em;
   margin-bottom: 0;
 `
 const NameText = styled.p`
   color: ${(props) => props.theme.gray};
   align-self: flex-start;
-  margin-left: 2.5em;
   margin-top: 3px;
 `
 const NotEnoughMoneyBox = styled.div`
@@ -161,6 +167,7 @@ export default function Producto(props) {
     <Box canBeRedeemed={currentlyCanBeRedeemed}>
       <BuyIcon color={"blue"} />
       <ProdImg src={img.url} />
+      <Separator />
       <CategoryText>{category}</CategoryText>
       <NameText>{name}</NameText>
       <Overlay redeemed={currentlyRedeemed}>
