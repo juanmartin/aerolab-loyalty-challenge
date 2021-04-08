@@ -31,7 +31,7 @@ export default function UserStats(props) {
       <Text>{name}</Text>
       <StatsBox>
         <Text>{points}</Text>
-        <img src={coin} alt="Monedas" />
+        <img src={coin} alt="Coins" />
       </StatsBox>
     </Box>
   )

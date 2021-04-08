@@ -87,7 +87,17 @@ const NameText = styled.p`
   margin-left: 2.5em;
   margin-top: 3px;
 `
-
+const NotEnoughMoneyBox = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 10px;
+  right: 10px;
+  gap: 5px;
+  padding: 10px 10px;
+  border-radius: 99999px;
+  background-color: ${(props) => props.theme.grayTransparent};
+`
 
 export default function Producto(props) {
   const { _id, name, cost, img, category, redeemed, canBeRedeemed } = props
@@ -95,10 +105,13 @@ export default function Producto(props) {
   const [currentlyRedeemed, setCurrentlyRedeemed] = useState(redeemed)
   const [currentlyCanBeRedeemed, setCurrentlyCanBeRedeemed] = useState(canBeRedeemed)
 
-  console.log('currentlyCanBeRedeemed', currentlyCanBeRedeemed, name, cost)
+  useEffect(() => {
+    if ((!currentlyRedeemed) && (user?.points < cost)) {
+      setCurrentlyCanBeRedeemed(false)
+    }
+  }, [user, currentlyRedeemed])
 
   const redeem = (id, cost) => {
-    console.log('redeem', id)
     fetch("https://coding-challenge-api.aerolab.co/redeem", {
       method: 'POST',
       headers: {
@@ -125,20 +138,43 @@ export default function Producto(props) {
     setCurrentlyCanBeRedeemed(false)
   }
 
+  const BuyIcon = (props) => {
+    if ((!currentlyRedeemed) && (user?.points < cost)) {
+      return (
+        <NotEnoughMoneyBox>
+          <p style={{ color: 'white', margin: 0 }}>You need {cost - user.points}</p>
+          <img src={coin} alt="Coins" style={{ width: 25 }} />
+        </NotEnoughMoneyBox>
+      )
+    } else {
+      if (props.color === "blue") {
+        return <BuyImg src={buyBlue} alt="Redeem" />
+      } else {
+        // Style hack para que el BuyImg coincida, pues los assets son de diferentes sizes
+        return <BuyImg src={buyWhite} alt="Redeem" style={{ width: 50, right: 4, top: 8 }} />
+      }
+    }
+  }
+
+
   return (
     <Box canBeRedeemed={currentlyCanBeRedeemed}>
-      <BuyImg src={buyBlue} alt="Redeem" />
+      <BuyIcon color={"blue"} />
       <ProdImg src={img.url} />
       <CategoryText>{category}</CategoryText>
       <NameText>{name}</NameText>
       <Overlay redeemed={currentlyRedeemed}>
-        {/* Hack para que el BuyImg coincida, pues los assets son de diferentes sizes */}
-        <BuyImg src={buyWhite} alt="Redeem" style={{ width: 50, right: 4, top: 8 }} />
+        <BuyIcon color={"white"} />
         <Cost>
           <h1 style={{ color: 'white', fontWeight: 'normal' }}>{cost}</h1>
-          <img src={coin} alt="Monedas" />
+          <img src={coin} alt="Coins" />
         </Cost>
-        <Button disabled={currentlyRedeemed} onClick={() => redeem(_id, cost)}>{currentlyRedeemed ? 'Redeemed!' : 'Redeem now'}</Button>
+        <Button
+          disabled={!currentlyCanBeRedeemed}
+          onClick={() => redeem(_id, cost)}
+        >
+          {currentlyCanBeRedeemed ? 'Redeem now' : (currentlyRedeemed ? 'Redeemed!' : 'Not enough coins!')}
+        </Button>
       </Overlay>
     </Box>
   )

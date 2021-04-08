@@ -14,6 +14,7 @@ const theme = {
   primary: '#0ad4fa',
   primaryTransparent: 'rgba(10, 212, 250, 0.8)',
   gray: '#616161',
+  grayTransparent: 'rgba(97, 97, 97, 0.8)',
   lightGray: '#a3a3a3',
   lightestGray: '#ededed',
   backgroundGray: '#f9f9f9',
