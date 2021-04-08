@@ -48,7 +48,7 @@ const Overlay = styled.div`
 `
 const ProdImg = styled.img`
   height: 182px;
-  object-fit: none;
+  object-fit: contain;
 `
 const Separator = styled.hr`
   width: 100%;
@@ -166,7 +166,7 @@ export default function Producto(props) {
   return (
     <Box canBeRedeemed={currentlyCanBeRedeemed}>
       <BuyIcon color={"blue"} />
-      <ProdImg src={img.url} />
+      <ProdImg src={img.url} srcSet={`${img.url} 800w, ${img.hdUrl} 1400w`} />
       <Separator />
       <CategoryText>{category}</CategoryText>
       <NameText>{name}</NameText>
