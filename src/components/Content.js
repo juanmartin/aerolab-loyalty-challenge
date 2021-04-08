@@ -15,7 +15,7 @@ const PaginationSortingBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   border-bottom: 1px solid ${props => props.theme.borderGray};
   padding-bottom: 2em;
 `
@@ -26,6 +26,7 @@ const ProductQty = styled.div`
 `
 const SortWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
   align-items: center;
   font-size: 24px;
@@ -47,7 +48,7 @@ const SortButton = styled.button`
   }
 `
 const PageBtn = styled.button`
-  width: 50px;
+  min-width: 50px;
   height: 50px;
   border: none;
   border-radius: 99999px;
@@ -165,7 +166,7 @@ export default function Content() {
         <PaginationSortingBox style={{ paddingTop: '4em' }}>
           <SortWrapper>
             <ProductQty>{pageLimit} of {products.length} products</ProductQty>
-            Sort by:
+            <span>Sort by:</span>
             <SortButton active={activeSorting === sorting[0]} onClick={sortMostRecent}>Most Recent</SortButton>
             <SortButton active={activeSorting === sorting[1]} onClick={() => sortPrice(true)}>Lowest Price</SortButton>
             <SortButton active={activeSorting === sorting[2]} onClick={() => sortPrice(false)}>Highest Price</SortButton>
